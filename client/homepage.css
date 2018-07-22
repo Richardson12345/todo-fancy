@@ -1,0 +1,18 @@
+.jumbotron{
+    text-align: center;
+}
+
+body{
+    background-color: #CDFFFF
+}
+
+#add-todo{
+    border: 5px solid bisque ;
+    padding: 50px;
+}
+
+
+#logout{
+    float: right;
+    
+}

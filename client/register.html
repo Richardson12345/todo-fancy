@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="register.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="form" id="app" >
+        <form class="login-form" >
+          <input type="text" placeholder="username"  v-model="username"/>
+          <input type="password" placeholder="password" v-model="password"/>
+          <input type="text" placeholder="email address " v-model="email"/>
+          <button v-on:click.prevent="register">create</button>
+          <p class="message">Already registered? <a href="login.html">Sign In</a></p>
+          <div class="red" v-if="wrong">oops! either name/email has been used or one of the fields is empty</div>
+        </form>
+    </div>
+
+<script src="register.js"></script>    
+</body>
+</html>
