@@ -1,33 +1,21 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-});
+const Schema = mongoose.Schema;
 
 const todoSchema = mongoose.Schema({
-    todo : String,
-    description : String,
-    dueDate : Date,
-    isCompleted : Boolean
+    user: {type : Schema.Types.ObjectId , ref : "user", required: true},
+    todo : { type: String, required: true},
+    description : { type: String, required: true},
+    createdAt : {
+        type: Date,
+        default: new Date()
+    },
+    dueDate : { type: Date, required: true},
+    isCompleted : {
+        type :  Boolean,
+        default: false
+    }
 })
 
 let todoModel = mongoose.model("todoSchema", todoSchema);
 
-// todoModel.create({
-//     todo: "become 10k mmr",
-//     description : "the legend of dots",
-//     dueDate : new Date(),
-//     isCompleted : false
-// },(err,data)=>{
-//     if(err){
-//         console.err(err)
-//     }else{
-//         console.log(data)
-//     }
-// })
-
-module.exports = {
-    todoModel
-}
+module.exports = todoModel;
