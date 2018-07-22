@@ -6,8 +6,19 @@ var logger = require('morgan');
 var cors = require('cors')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var mongoose = require("mongoose");
+var cors = require("cors")
 var app = express();
+
+
+mongoose.connect('mongodb://admin:abc123@ds147181.mlab.com:47181/todo-project');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("alive")
+  // we're connected!
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,6 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(cors())
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

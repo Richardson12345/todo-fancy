@@ -1,6 +1,5 @@
-const model = require("../model/model");
-const todoModel = model.todoModel
-
+const todoModel = require("../model/todoModel");
+// const todoModel = model.todoModel
 
 class Controller {
     static getTodo(req,res){
