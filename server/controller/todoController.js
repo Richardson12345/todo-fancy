@@ -90,7 +90,8 @@ class Controller {
     }
 
     static deleteTodo(req,res){
-        let todo = req.body.todo;
+        let todo = req.params.id;
+        console.log("----",todo);
         todoModel.deleteOne({todo},(err,changes)=>{
             if(err){
                 res.json(err).status(400);

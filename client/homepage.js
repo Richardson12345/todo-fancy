@@ -1,8 +1,75 @@
+Vue.component("modal",{
+    props: ["name"],
+    template: ` <div class="modal fade" id="myModal" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close justiify-content-center" 
+                        data-dismiss="modal">update your todo</button>
+                      </div>
+                      <div class="modal-body">
+                        <p>{{joke}}.</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>`,
+    data: function(){
+        return{
+            joke : ""
+
+        }
+    },
+    mounted(){
+        this.getjoke()
+    } ,
+    methods: {
+    getjoke : function(){
+            axios.get('https://api.chucknorris.io/jokes/random')
+            .then(result => {
+                this.joke = result.data.value
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+    }
+})
+
+
 Vue.component('update', {
-    template : `<button v-on:click="wooof" class="btn btn-warning"> completed</button>`,
+    props: ["beras"],
+    template : `<span>
+                <button 
+                  v-on:click="wooof" class="btn btn-warning"> 
+                  toggle
+                </button>
+                <button 
+                v-on:click="update" 
+                class="btn btn-default">
+                  update
+                </button>
+                </span>`,
     methods : {
         wooof(){
-            alert("you did it")
+            console.log(this.beras)
+            axios.put("http://localhost:3000/todo",{
+                todo: this.beras
+            },{headers: {
+                token: localStorage.getItem("item")
+            }})
+            .then(result => {
+                console.log(result);
+                location.reload()
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        update(){
+            $("#myModal").modal()
         }
     }
 })
@@ -13,7 +80,18 @@ Vue.component('delete', {
     template : `<button v-on:click="action" class="btn btn-danger"> delete </button>`,
     methods : {
         action(){
-            console.log(event)
+            axios.delete(`http://localhost:3000/todo/${this.beras}`,{
+                headers: {
+                token: localStorage.getItem("item")
+                 }  
+            })
+            .then(result => {
+                console.log(result);
+                location.reload()
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
     }
 })
@@ -64,12 +142,13 @@ Vue.component('create', {
 
 Vue.component('todos', {
     props: ['completed', "todo" , "due", "description"],
-    data: {
-        function(){
+    data:   function(){
             return{ nasi : "goreng"}
-        }
-    },
-    template: '<div><h3><strong>todo: </strong>{{todo}} <strong>description:</strong> {{description}}  <strong>dueDate:</strong> {{due}} <strong>completed:</strong> {{completed}} </h3>  <update v-on:click="mcjibber"></update>  <delete v-bind:beras="this.nasi" ></delete> </div>'
+            }
+    ,
+    template: `<div><h3><strong>todo: </strong>{{todo}} <strong>description:</strong> {{description}}  <strong> 
+    dueDate:</strong> {{due}} <strong>completed:</strong> {{completed}} </h3> 
+     <update v-bind:beras="todo"></update>  <delete v-bind:beras=todo></delete> </div>`
   })
 
 new Vue ({

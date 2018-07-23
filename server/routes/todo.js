@@ -7,6 +7,6 @@ const todooMiddleware = require("../middleware/jsonWebToken")
 router.get('/',  todooMiddleware.verifyToken ,todoController.getTodo);
 router.post('/', todoController.makeTodo);
 router.put('/',todooMiddleware.verifyToken ,todoController.toggleTodo);
-router.delete('/',todooMiddleware.verifyToken, todoController.deleteTodo);
+router.delete('/:id',todooMiddleware.verifyToken, todoController.deleteTodo);
 
 module.exports = router;

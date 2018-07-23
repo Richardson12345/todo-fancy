@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-    <app id="app">
+    <div id="app">
         <h1 class="jumbotron"><span id="logout"><button v-on:click="mcjibber"> {{logout}}</button></span>  {{title}}</h1>
         <ul class="list-group container">
             <li v-for="post in posts" class="list-group-item "><todos          
@@ -24,8 +24,9 @@
         <hr>
         <hr>
         <create class="container"  id="add-todo"></create>
-
-    </app>
+        <modal></modal>
+        <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+    </div>
     
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
