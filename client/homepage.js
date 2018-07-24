@@ -5,10 +5,14 @@ Vue.component("modal",{
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close justiify-content-center" 
-                        data-dismiss="modal">update your todo</button>
+                        data-dismiss="modal">update: {{name}}</button>
                       </div>
                       <div class="modal-body">
-                        <p>{{joke}}.</p>
+                        <p>{{joke}}.</p><br>
+                        todo: <input v-model="todo"></input><br>
+                        dueDate: <input type="date" v-model="dueDate"></input><br>
+                        description: <input v-model="description"></input>
+                        <br><button v-on:click="updateTodo">Save Changes</button>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -18,8 +22,10 @@ Vue.component("modal",{
                 </div>`,
     data: function(){
         return{
-            joke : ""
-
+            joke: "",
+            todo : "",
+            dueDate: "",
+            description:""
         }
     },
     mounted(){
@@ -34,6 +40,27 @@ Vue.component("modal",{
             .catch(err => {
                 console.log(err)
             })
+        },
+    updateTodo: function(){
+        let dueDate = new Date(...this.dueDate.split("-"));
+            let input = {
+                currentTodo: this.name,
+                todo: this.todo,
+                dueDate: dueDate,
+                description: this.description
+            }
+        axios.put('http://localhost:3000/todo/update', input , {
+            headers: {
+                token : localStorage.getItem("item")
+            }
+        })
+        .then((result => {
+            console.log(result)
+            location.reload()
+        }))
+        .catch(err => {
+            console.log(err)
+        })
         }
     }
 })
@@ -41,7 +68,8 @@ Vue.component("modal",{
 
 Vue.component('update', {
     props: ["beras"],
-    template : `<span>
+    template : `
+                 <span>                      
                 <button 
                   v-on:click="wooof" class="btn btn-warning"> 
                   toggle
@@ -69,7 +97,7 @@ Vue.component('update', {
             })
         },
         update(){
-            $("#myModal").modal()
+            this.$emit("updateTodo", this.beras)
         }
     }
 })
@@ -98,18 +126,20 @@ Vue.component('delete', {
 
 Vue.component('create', {
     template : `
+    <div>
     <form >
-    <label for="todo-input"> <h3>Todo : </h3> </label>
-    <input id="todo-input"  type="text" v-model="todo" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" placeholder= "todo">
-    <br>
-    <label for="description-input"><h3>Description : </h3></label> 
-    <input type="text" id="description-input" v-model="description" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" placeholder= "description">
-    <br>
-    <label for="due-input"><h3>Due Date : </h3></label>
-    <input type="date" id="due-input" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" v-model="dueDate" >
-    <br>
-    <button v-on:click.prevent="addTodo"  class="btn btn-success">Add new todo</button>
+        <label for="todo-input"> <h3>Todo : </h3> </label>
+        <input id="todo-input"  type="text" v-model="todo" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" placeholder= "todo">
+        <br>
+        <label for="description-input"><h3>Description : </h3></label> 
+        <input type="text" id="description-input" v-model="description" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" placeholder= "description">
+        <br>
+        <label for="due-input"><h3>Due Date : </h3></label>
+        <input type="date" id="due-input" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" v-model="dueDate" >
+        <br>
+        <button v-on:click.prevent="addTodo"  class="btn btn-success">Add new todo</button>
     </form>
+    </div>
     `
     ,
     data: function(){
@@ -143,12 +173,31 @@ Vue.component('create', {
 Vue.component('todos', {
     props: ['completed', "todo" , "due", "description"],
     data:   function(){
-            return{ nasi : "goreng"}
+            return{ 
+                nasi : "goreng"
+                }
             }
     ,
-    template: `<div><h3><strong>todo: </strong>{{todo}} <strong>description:</strong> {{description}}  <strong> 
-    dueDate:</strong> {{due}} <strong>completed:</strong> {{completed}} </h3> 
-     <update v-bind:beras="todo"></update>  <delete v-bind:beras=todo></delete> </div>`
+    template: `<div>
+                <h3>
+                  <strong>todo: </strong>
+                  {{todo}} <strong>description:</strong> {{description}}  
+                  <strong> 
+                    dueDate:
+                  </strong> {{due}} 
+                  <strong>completed:
+                  </strong> {{completed}}
+                 </h3> 
+                <update v-bind:beras="todo" v-on:updateTodo="updateTitle($event)">
+                </update>  
+                <delete v-bind:beras=todo>
+                </delete> 
+                </div>`,
+    methods: {
+        updateTitle: function updateTitle(e){
+            this.$emit("sendtodo", e)
+        }
+    }
   })
 
 new Vue ({
@@ -156,8 +205,10 @@ new Vue ({
     data: {
         title: "wellcome to hontoni subarashi todo",
         logout: "log-out",
-        posts : []
-    },
+        currentTodo : "",
+        posts : [],
+    }
+    ,
     methods: {
         showTodo(){
             axios.get("http://localhost:3000/todo", { headers: { token : localStorage.getItem("item")}})
@@ -175,6 +226,12 @@ new Vue ({
         mcjibber(){
             localStorage.clear();
             window.location = "login.html";
+        },
+        finalUpdate(e){
+            console.log(e);
+            this.currentTodo = e;
+            $("#myModal").modal()
+
         }
     },
     mounted(){

@@ -24,6 +24,8 @@ window.fbAsyncInit = function() {
 function statusChangeCallback(response){
     if(response.status === "connected"){
         console.log(response.authResponse.accessToken);
+
+
     // let accessToken = response.authResponse.accessToken
     // localStorage.setItem("accest Token" , accessToken)
     //     console.log("Logged in and authenticated");
