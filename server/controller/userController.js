@@ -80,6 +80,10 @@ class userController{
 
     }
 
+    static fbSignIn(req,res){
+        
+    }
+
 }
 
 

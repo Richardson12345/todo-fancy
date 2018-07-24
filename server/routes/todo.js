@@ -8,5 +8,6 @@ router.get('/',  todooMiddleware.verifyToken ,todoController.getTodo);
 router.post('/', todoController.makeTodo);
 router.put('/',todooMiddleware.verifyToken ,todoController.toggleTodo);
 router.delete('/:id',todooMiddleware.verifyToken, todoController.deleteTodo);
+router.put('/update', todooMiddleware.verifyToken, todoController.updateTodo)
 
 module.exports = router;

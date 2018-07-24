@@ -9,7 +9,7 @@ class Controller {
     jwt.verify(token, "secret", (err,decoded)=>{
         if(decoded){
             let user = decoded.id;
-            todoModel.find({})
+            todoModel.find({user: user})
             .populate("user")
             .exec((err,data)=>{
                 if(err){
@@ -35,6 +35,7 @@ class Controller {
     }
 
     static makeTodo(req,res){
+        // console.log(req.body.dueDate)
         let token = req.headers.token;
         jwt.verify(token,"secret",(err,decoded)=>{
           user.find({username: decoded.username},(err,currentUser)=>{
@@ -97,6 +98,30 @@ class Controller {
                 res.json(err).status(400);
             }else{
                 res.json(changes).status(200);
+            }
+        })
+    }
+
+    static updateTodo(req,res){
+        let currentTodo = req.body.currentTodo
+        let description = req.body.description;
+        let todo = req.body.todo;
+        let dueDate = req.body.dueDate;
+
+        todoModel.updateOne({todo: currentTodo}, {
+            todo,
+            dueDate,
+            description
+
+        },(err,result)=>{
+            if(err){
+                res
+                .status(500)
+                .json(err)
+            }else{
+                res
+                .status(200)
+                .json(result)
             }
         })
     }
