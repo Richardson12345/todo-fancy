@@ -38,8 +38,9 @@ class Controller {
         // console.log(req.body.dueDate)
         let token = req.headers.token;
         jwt.verify(token,"secret",(err,decoded)=>{
+            console.log('----', err, decoded)
           user.find({username: decoded.username},(err,currentUser)=>{
-            // console.log('hahaha ', currentUser)
+            console.log('hahaha ', currentUser)
             let id = currentUser[0].id;
             todoModel.create({
                 user : id,

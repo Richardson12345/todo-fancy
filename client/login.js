@@ -5,11 +5,7 @@ window.fbAsyncInit = function() {
         xfbml      : true,
         version    : 'v3.0'
     });
-        
-      
-    FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-    });          
+    
 };
   
 (function(d, s, id){
@@ -23,29 +19,20 @@ window.fbAsyncInit = function() {
 
 function statusChangeCallback(response){
     if(response.status === "connected"){
-        console.log(response.authResponse.accessToken);
-
-
-    // let accessToken = response.authResponse.accessToken
-    // localStorage.setItem("accest Token" , accessToken)
-    //     console.log("Logged in and authenticated");
-    // axios.post('http://localhost:3000/users', {}, {
-    //     headers: { accessToken } 
-    // })
-    //     .then(function (response) {
-    //         let jwtToken = response.data;
-    //         localStorage.setItem("jwtToken",jwtToken);
-    //         location.replace("shittyInput.html");
-    //     //  console.log(response.data)
-    // //    console.log(response.data)
-    //     })
-    //     .catch(function (error) {
-    //     console.log(error);
-    //     });
-        
-    // //  location.replace("woof.html")
-    // }else{
-    //     console.log("not authenticated")
+        // console.log(response.authResponse.accessToken);
+        let accessToken = response.authResponse.accessToken
+        axios.post('http://localhost:3000/user/fbSignIn', {
+            fbToken : accessToken
+        })
+        .then(result => {
+            console.log(result.data)
+            localStorage.setItem("item", result.data);
+            location.replace("homepage.html")
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    
     }
 }
 

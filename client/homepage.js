@@ -68,8 +68,7 @@ Vue.component("modal",{
 
 Vue.component('update', {
     props: ["beras"],
-    template : `
-                 <span>                      
+    template : ` <span>                      
                 <button 
                   v-on:click="wooof" class="btn btn-warning"> 
                   toggle
@@ -224,12 +223,14 @@ new Vue ({
             }))
         },
         mcjibber(){
+            let fbLogged = localStorage.getItem("")
             localStorage.clear();
             window.location = "login.html";
+
         },
         finalUpdate(e){
             console.log(e);
-            this.currentTodo = e;
+
             $("#myModal").modal()
 
         }
