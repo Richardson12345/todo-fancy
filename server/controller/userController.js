@@ -31,7 +31,6 @@ class userController{
                 })
             }
         })
-
     }
 
     static signIn(req,res){
