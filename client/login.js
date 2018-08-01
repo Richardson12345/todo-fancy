@@ -44,10 +44,6 @@ function checkLoginState() {
 }
 
 
-
-
-
-
 let app = new Vue({
     el: "#app",
     data: {

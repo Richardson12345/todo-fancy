@@ -126,18 +126,18 @@ Vue.component('delete', {
 Vue.component('create', {
     template : `
     <div>
-    <form >
-        <label for="todo-input"> <h3>Todo : </h3> </label>
-        <input id="todo-input"  type="text" v-model="todo" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" placeholder= "todo">
-        <br>
-        <label for="description-input"><h3>Description : </h3></label> 
-        <input type="text" id="description-input" v-model="description" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" placeholder= "description">
-        <br>
-        <label for="due-input"><h3>Due Date : </h3></label>
-        <input type="date" id="due-input" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" v-model="dueDate" >
-        <br>
-        <button v-on:click.prevent="addTodo"  class="btn btn-success">Add new todo</button>
-    </form>
+      <form >
+          <label for="todo-input"> <h3>Todo : </h3> </label>
+            <input id="todo-input"  type="text" v-model="todo" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" placeholder= "todo">
+            <br>
+            <label for="description-input"><h3>Description : </h3></label> 
+            <input type="text" id="description-input" v-model="description" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" placeholder= "description">
+            <br>
+            <label for="due-input"><h3>Due Date : </h3></label>
+            <input type="date" id="due-input" class="form-control form-control-lg shadow-lg p-3 mb-5 bg-white rounded" v-model="dueDate" >
+            <br>
+          <button v-on:click.prevent="addTodo"  class="btn btn-success">Add new todo</button>
+      </form>
     </div>
     `
     ,
@@ -178,20 +178,20 @@ Vue.component('todos', {
             }
     ,
     template: `<div>
-                <h3>
-                  <strong>todo: </strong>
-                  {{todo}} <strong>description:</strong> {{description}}  
-                  <strong> 
-                    dueDate:
-                  </strong> {{due}} 
-                  <strong>completed:
-                  </strong> {{completed}}
-                 </h3> 
-                <update v-bind:beras="todo" v-on:updateTodo="updateTitle($event)">
-                </update>  
-                <delete v-bind:beras=todo>
-                </delete> 
-                </div>`,
+                 <h3>
+                   <strong>todo: </strong>
+                   {{todo}} <strong>description:</strong> {{description}}  
+                   <strong> 
+                     dueDate:
+                   </strong> {{due}} 
+                   <strong>completed:
+                   </strong> {{completed}}
+                  </h3> 
+                 <update v-bind:beras="todo" v-on:updateTodo="updateTitle($event)">
+                 </update>  
+                 <delete v-bind:beras=todo>
+                 </delete> 
+               </div>`,
     methods: {
         updateTitle: function updateTitle(e){
             this.$emit("sendtodo", e)
@@ -225,12 +225,11 @@ new Vue ({
         mcjibber(){
             let fbLogged = localStorage.getItem("")
             localStorage.clear();
-            window.location = "login.html";
+            window.location = "index.html";
 
         },
         finalUpdate(e){
             console.log(e);
-
             $("#myModal").modal()
 
         }

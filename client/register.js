@@ -17,7 +17,7 @@ new Vue({
            .then((result => {
                console.log(result.data)
                alert("succesfully registered, you will be redirected to the login page");
-               window.location = "login.html"
+               window.location = "index.html"
 
            }))
            .catch((err => {

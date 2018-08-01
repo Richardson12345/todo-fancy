@@ -1,5 +1,5 @@
 const userModel = require("../model/userModel");
-const  bcrpyt = require("bcrypt");
+const  bcrpyt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const FB = require('fb');
 
